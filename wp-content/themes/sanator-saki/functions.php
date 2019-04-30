@@ -14,57 +14,42 @@ Version: 1.0
 ****************************************************************************НАСТРОЙКИ ТЕМЫ*****************************************************************
 ***********************************************************************************************************************************************************
 ***********************************************************************************************************************************************************/
-/*function mk_scripts(){
-	wp_register_style( 'bootstrap', get_template_directory_uri() . '/css/bootstrap.min.css');
-  wp_enqueue_style( 'bootstrap' );
+function mk_scripts(){
+	wp_register_style( 'awesome', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css', false, '4.4.0' );
+	wp_enqueue_style( 'awesome' );
 	
-	wp_register_style( 'roboto', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css', false, '4.4.0' );
+	wp_register_style( 'roboto', 'https://fonts.googleapis.com/css?family=Montserrat|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i|Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&amp;subset=cyrillic', false, '' );
 	wp_enqueue_style( 'roboto' );
+	
+	wp_register_style( 'fancybox', 'https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css', false, '3.5.7' );
+	wp_enqueue_style( 'fancybox' );
+	
+	wp_register_style( 'bootstrap', get_template_directory_uri() . '/css/bootstrap.min.css');
+	wp_enqueue_style( 'bootstrap' );
+	
+	wp_register_style( 'responsive', get_template_directory_uri() . '/css/bootstrap-responsive.min.css');
+	wp_enqueue_style( 'responsive' );
+	
+	wp_register_style( 'mmenu', get_template_directory_uri() . '/css/mmenu.css');
+	wp_enqueue_style( 'mmenu' );
+	
+	wp_register_style( 'carousel', get_template_directory_uri() . '/css/owl.carousel.min.css');
+	wp_enqueue_style( 'carousel' );
+	
+	wp_register_style( 'custom', get_template_directory_uri() . '/css/custom.css'); 
+	wp_enqueue_style( 'custom' );
+	
 
-	wp_register_style( 'reset', get_template_directory_uri() . '/css/reset.css');
-  wp_enqueue_style( 'reset' );
-	
-	wp_register_style( 'fonts', get_template_directory_uri() . '/css/fonts.css');
-  wp_enqueue_style( 'fonts' );
-	
-	wp_register_style( 'styles', get_template_directory_uri() . '/css/styles.css');
-  wp_enqueue_style( 'styles' );
-	
-	wp_register_style( 'media', get_template_directory_uri() . '/css/media.css');
-  wp_enqueue_style( 'media' );
-	
-	wp_register_style( 'owl-default', get_template_directory_uri() . '/css/owl.carousel.min.css'); 
-  wp_enqueue_style( 'owl-default' );
-	
-	wp_register_style( 'owl-theme', get_template_directory_uri() . '/css/owl.theme.default.min.css');
-  wp_enqueue_style( 'owl-theme' );
-	
-	wp_register_style( 'fancybox', get_template_directory_uri() . '/js/source/jquery.fancybox.css');
-  wp_enqueue_style( 'fancybox' );
-	
-	wp_register_style( 'fancybox-buttons', get_template_directory_uri() . '/js/source/helpers/jquery.fancybox-buttons.css');
-  wp_enqueue_style( 'fancybox-buttons' );
-	
-	wp_register_style( 'fancybox-thumbs', get_template_directory_uri() . '/js/source/helpers/jquery.fancybox-thumbs.css');
-  wp_enqueue_style( 'fancybox-thumbs' );
-	
-	wp_register_style( 'sweetalert', get_template_directory_uri() . '/css/sweetalert.css');
-  wp_enqueue_style( 'sweetalert' );
-	
 	if (!is_admin()) {
-		wp_enqueue_script( 'jquery-min', get_template_directory_uri() . '/js/jquery-2.1.1.min.js', '', '2.1.1', true );
-		wp_enqueue_script( 'flip', get_template_directory_uri() . '/js/jquery.flip.min.js', '', '5.0.3', true );
-		wp_enqueue_script( 'owl', get_template_directory_uri() . '/js/owl.carousel.min.js', '', '', true );
-		wp_enqueue_script( 'fancybox', get_template_directory_uri() . '/js/source/jquery.fancybox.pack.js', '', '', true );
-		wp_enqueue_script( 'mousewheel', get_template_directory_uri() . '/js/jquery.mousewheel-3.0.6.pack.js', '', '', true );
-		wp_enqueue_script( 'fancybox-buttons', get_template_directory_uri() . '/js/source/helpers/jquery.fancybox-buttons.js', '', '', true );
-		wp_enqueue_script( 'fancybox-media', get_template_directory_uri() . '/js/source/helpers/jquery.fancybox-media.js', '', '', true );
-		wp_enqueue_script( 'fancybox-thumbs', get_template_directory_uri() . '/js/source/helpers/jquery.fancybox-thumbs.js', '', '', true );
-		wp_enqueue_script( 'sweetalert', get_template_directory_uri() . '/js/sweetalert.min.js', '', '', true );
-		wp_enqueue_script( 'common-file', get_template_directory_uri() . '/js/common.js', '', '', true );
+		wp_enqueue_script( 'jquery-min', 'https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js', '', '', true );
+		wp_enqueue_script( 'bootstrap-min', get_template_directory_uri() . '/js/bootstrap.min.js', '', '', true );
+		wp_enqueue_script( 'mmenu-min', get_template_directory_uri() . '/js/mmenu.js', '', '', true );
+		wp_enqueue_script( 'carousel-min', get_template_directory_uri() . '/js/owl.carousel.min.js', '', '', true );
+		wp_enqueue_script( 'custom-min', get_template_directory_uri() . '/js/custom.js', '', '', true );
+		wp_enqueue_script( 'fancybox-min', 'https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js', '', '', true );
 	}
 }
-add_action( 'wp_enqueue_scripts', 'mk_scripts' );*/
+add_action( 'wp_enqueue_scripts', 'mk_scripts' );
 
 //Регистрируем название сайта
 function mkvadrat_wp_title( $title, $sep ) {
@@ -98,14 +83,18 @@ if(function_exists('register_nav_menus')){
 	register_nav_menus(
 		array(
 		  'main_menu'   => 'Главное меню',
+		  'frst_menu'   => 'Блок 1',
+		  'scnd_menu'   => 'Блок 2',
 		)
 	);
 }
 
 //Изображение в шапке сайта
 $args = array(
-  'default-image' => get_template_directory_uri() . '/images/logo.png',
-  'uploads'       => true,
+	'width'         => 255,
+	'height'        => 120,
+	'default-image' => get_template_directory_uri() . '/img/sanatorii-saki-logo.jpg',
+	'uploads'       => true,
 );
 add_theme_support( 'custom-header', $args );
 
@@ -116,6 +105,135 @@ if ( function_exists( 'add_theme_support' ) ) {
 
 //Отключить редактор
 add_filter('use_block_editor_for_post', '__return_false');
+
+/**********************************************************************************************************************************************************
+***********************************************************************************************************************************************************
+*********************************************************************РАБОТА С METAПОЛЯМИ*******************************************************************
+***********************************************************************************************************************************************************
+***********************************************************************************************************************************************************/
+//Вывод данных из произвольных полей для всех страниц сайта
+function getMeta($meta_key){
+	global $wpdb;
+	
+	$value = $wpdb->get_var( $wpdb->prepare("SELECT meta_value FROM $wpdb->postmeta WHERE meta_key = %s ORDER BY meta_id DESC LIMIT 1", $meta_key) );
+	
+	return $value;
+}
+
+//Вывод изображения для плагина nextgen-gallery
+function getNextGallery($post_id, $meta_key){
+	global $wpdb;
+	
+	$value = $wpdb->get_var( $wpdb->prepare("SELECT meta_value FROM $wpdb->postmeta AS pm JOIN $wpdb->posts AS p ON (pm.post_id = p.ID) AND (pm.post_id = %s) AND meta_key = %s ORDER BY pm.post_id DESC LIMIT 1", $post_id, $meta_key) );
+	
+	$unserialize_value = unserialize($value);
+	
+	return $unserialize_value;	
+}
+
+/**********************************************************************************************************************************************************
+***********************************************************************************************************************************************************
+****************************************************************************МЕНЮ САЙТА*********************************************************************
+***********************************************************************************************************************************************************
+***********************************************************************************************************************************************************/
+// Добавляем свой класс для пунктов меню:
+class header_menu extends Walker_Nav_Menu {
+	// Добавляем классы к вложенным ul
+	function start_lvl( &$output, $depth ) {
+		// Глубина вложенных ul
+		$indent = ( $depth > 0  ? str_repeat( "\t", $depth ) : '' ); // code indent
+		$display_depth = ( $depth + 1); // because it counts the first submenu as 0
+		$classes = array(
+			'',
+			( $display_depth % 2  ? '' : '' ),
+			( $display_depth >=2 ? '' : '' ),
+			''
+			);
+		$class_names = implode( ' ', $classes );
+		// build html
+		if($depth == 0){
+			$output .= "\n" . $indent . '<ul class="sub-menu">' . "\n";
+		}else if($depth == 1){
+			$output .= "\n" . $indent . '<ul class="sub-menu">' . "\n";
+		}else if($depth >= 2){
+			$output .= "\n" . $indent . '<ul class="sub-menu">' . "\n";
+		}
+	}
+
+	// Добавляем классы к вложенным li
+	function start_el( &$output, $item, $depth, $args ) {
+		global $wpdb;
+		global $wp_query;
+		$indent = ( $depth > 0 ? str_repeat( "\t", $depth ) : '' ); // code indent
+
+		// depth dependent classes
+		$depth_classes = array(
+			( $depth == 0 ? 'has-sub' : '' ),
+			( $depth >=2 ? '' : '' ),
+			( $depth % 2 ? '' : '' ),
+			'menu-item-depth-' . $depth
+		);
+
+		$depth_class_names = esc_attr( implode( ' ', $depth_classes ) );
+
+		// passed classes
+		$classes = empty( $item->classes ) ? array() : (array) $item->classes;
+
+		$mycurrent = ( $item->current == 1 ) ? ' active' : '';
+
+		$class_names = esc_attr( implode( ' ', apply_filters( 'nav_menu_css_class', array_filter( $classes ), $item ) ) );
+
+		$output .= $indent . '<li class="menu-item hasSubMenu">';
+
+		// Добавляем атрибуты и классы к элементу a (ссылки)
+		$attributes  = ! empty( $item->attr_title ) ? ' title="'  . esc_attr( $item->attr_title ) .'"' : '';
+		$attributes .= ! empty( $item->target )     ? ' target="' . esc_attr( $item->target     ) .'"' : '';
+		$attributes .= ! empty( $item->xfn )        ? ' rel="'    . esc_attr( $item->xfn        ) .'"' : '';
+		$attributes .= ! empty( $item->url )        ? ' href="'   . esc_attr( $item->url        ) .'"' : ''; 
+		$attributes .= ' class="menu-link ' . ( $depth == 0 ? 'parent' : '' ) . ( $depth == 1 ? 'child' : '' ) . ( $depth >= 2 ? 'sub-child' : '' ) . '"';
+
+		if($depth == 0){
+			$has_children = $wpdb->get_results( $wpdb->prepare("SELECT post_id FROM $wpdb->postmeta WHERE meta_value = %s AND meta_key = '_menu_item_menu_item_parent'", $item->ID), ARRAY_A);
+
+			$link  =  $item->url;
+
+			$title = apply_filters( 'the_title', $item->title, $item->ID );
+
+			if(!empty($has_children)){
+				$item_output = '<a href="'. $link .'">' . $title .' </a>';
+			}else{
+				$item_output = '<a href="'. $link .'">' . $title .'</a>';
+			}
+		}else if($depth == 1){
+			$has_children = $wpdb->get_results( $wpdb->prepare("SELECT post_id FROM $wpdb->postmeta WHERE meta_value = %s AND meta_key = '_menu_item_menu_item_parent'", $item->ID), ARRAY_A);
+
+			$link  =  $item->url;
+
+			$title = apply_filters( 'the_title', $item->title, $item->ID );
+
+			if(!empty($has_children)){
+				$item_output = '<a href="'. $link .'">' . $title .' </a>';
+			}else{
+				$item_output = '<a href="'. $link .'">' . $title .'</a>';
+			}
+		}else if($depth >= 2){
+			$item_output = sprintf( '%1$s<a%2$s>%3$s%4$s%5$s</a>%6$s',
+				$args->before,
+				$attributes,
+				$args->link_before,
+				apply_filters( 'the_title', $item->title, $item->ID ),
+				$args->link_after,
+				$args->after
+			);
+		}
+		// build html
+
+		$output .= apply_filters( 'walker_nav_menu_start_el', $item_output, $item, $depth, $args );
+	}
+}
+
+
+
 
 
 /**********************************************************************************************************************************************************
@@ -276,3 +394,5 @@ function getFaqs($atts){
         echo $output;
 }
 add_shortcode('faq', 'getFaqs');
+
+
