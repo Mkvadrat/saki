@@ -131,6 +131,25 @@ function getNextGallery($post_id, $meta_key){
 	return $unserialize_value;	
 }
 
+//Вывод связанных данных для single.php
+function getRelatedMeta($post_id, $meta_key){
+	global $wpdb;
+	
+	$value = array();
+
+	$serialized_object = $wpdb->get_results( $wpdb->prepare("SELECT meta_value FROM $wpdb->postmeta WHERE post_id = %s AND meta_key = %s", $post_id, $meta_key) );
+	
+	$unserialized_object = unserialize($serialized_object[0]->meta_value);
+	
+	if($unserialized_object){
+		foreach($unserialized_object as $post_id){
+			$value[] = get_post( $post_id );
+		}
+	}
+	
+	return $value;
+}
+
 /**********************************************************************************************************************************************************
 ***********************************************************************************************************************************************************
 ****************************************************************************МЕНЮ САЙТА*********************************************************************
@@ -196,13 +215,23 @@ class header_menu extends Walker_Nav_Menu {
 			$has_children = $wpdb->get_results( $wpdb->prepare("SELECT post_id FROM $wpdb->postmeta WHERE meta_value = %s AND meta_key = '_menu_item_menu_item_parent'", $item->ID), ARRAY_A);
 
 			$link  =  $item->url;
-
+		
 			$title = apply_filters( 'the_title', $item->title, $item->ID );
-
+			
+			$actual_http = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http");
+			
 			if(!empty($has_children)){
-				$item_output = '<a href="'. $link .'">' . $title .' </a>';
+				if(!empty($item->classes[0])){
+					$item_output = '<a class="' . $item->classes[0] . '" href="'. $link .'">' . $title .' </a>';
+				}else{
+					$item_output = '<a href="'. $link .'">' . $title .' </a>';
+				}
 			}else{
-				$item_output = '<a href="'. $link .'">' . $title .'</a>';
+				if(!empty($item->classes[0])){
+					$item_output = '<a class="' . $item->classes[0] . '" href="'. $link .'"></a>';
+				}else{
+					$item_output = '<a href="'. $link .'">' . $title .' </a>';
+				}
 			}
 		}else if($depth == 1){
 			$has_children = $wpdb->get_results( $wpdb->prepare("SELECT post_id FROM $wpdb->postmeta WHERE meta_value = %s AND meta_key = '_menu_item_menu_item_parent'", $item->ID), ARRAY_A);
@@ -232,6 +261,73 @@ class header_menu extends Walker_Nav_Menu {
 	}
 }
 
+/**********************************************************************************************************************************************************
+***********************************************************************************************************************************************************
+********************************************************************РАЗДЕЛ "МАГАЗИН" В АДМИНКЕ*************************************************************
+***********************************************************************************************************************************************************
+***********************************************************************************************************************************************************/
+//Вывод в админке раздела
+function register_post_type_app() {
+	$labels = array(
+	 'name' => 'Номера',
+	 'singular_name' => 'Номера',
+	 'add_new' => 'Добавить номер',
+	 'add_new_item' => 'Добавить новый номер',
+	 'edit_item' => 'Редактировать номер',
+	 'new_item' => 'Новые номера',
+	 'all_items' => 'Все номера',
+	 'view_item' => 'Просмотр номера на сайте',
+	 'search_items' => 'Искать номер',
+	 'not_found' => 'Номер не найдена.',
+	 'not_found_in_trash' => 'В корзине нет номеров.',
+	 'menu_name' => 'Номера'
+	 );
+	$args = array(
+		'labels' => $labels,
+		'public' => true,
+		'exclude_from_search' => false,
+		'show_ui' => true,
+		'has_archive' => false,
+		'menu_icon' => 'dashicons-building',
+		'menu_position' => 8,
+		'supports' => array( 'title','editor', 'thumbnail' ),
+	);
+ 	register_post_type('rooms', $args);
+}
+add_action( 'init', 'register_post_type_app' );
+
+function true_post_type_app( $rooms ) {
+	global $post, $post_ID;
+
+	$rooms['rooms'] = array(
+			0 => '',
+			1 => sprintf( 'Статьи обновлены. <a href="%s">Просмотр</a>', esc_url( get_permalink($post_ID) ) ),
+			2 => 'Статья обновлёна.',
+			3 => 'Статья удалёна.',
+			4 => 'Статья обновлена.',
+			5 => isset($_GET['revision']) ? sprintf( 'Статья восстановлена из редакции: %s', wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
+			6 => sprintf( 'Статья опубликована на сайте. <a href="%s">Просмотр</a>', esc_url( get_permalink($post_ID) ) ),
+			7 => 'Статья сохранена.',
+			8 => sprintf( 'Отправлена на проверку. <a target="_blank" href="%s">Просмотр</a>', esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ) ),
+			9 => sprintf( 'Запланирована на публикацию: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Просмотр</a>', date_i18n( __( 'M j, Y @ G:i' ), strtotime( $post->post_date ) ), esc_url( get_permalink($post_ID) ) ),
+			10 => sprintf( 'Черновик обновлён. <a target="_blank" href="%s">Просмотр</a>', esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ) ),
+	);
+	return $rooms;
+}
+add_filter( 'post_updated_messages', 'true_post_type_app' );
+	
+function create_taxonomies_app(){
+    // Cats Categories
+    register_taxonomy('rooms-list',array('rooms'),array(
+        'hierarchical' => true,
+        'label' => 'Рубрики',
+        'singular_name' => 'Рубрика',
+        'show_ui' => true,
+        'query_var' => true,
+        'rewrite' => array('slug' => 'rooms-list' )
+    ));
+}
+add_action( 'init', 'create_taxonomies_app', 0 );
 
 
 
