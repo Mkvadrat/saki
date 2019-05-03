@@ -46,6 +46,8 @@ Version: 1.0
         <div class="booking__block">
             <?php echo getMeta('travelline_header_main_page'); ?>
         </div>
+        
+        <?php if( is_front_page() ) { ?>
         <div class="main-slider">
             <div id="slider-overlay">
                 <div class="widget slider-menu">
@@ -73,6 +75,8 @@ Version: 1.0
                 </div>
             </div>
         </div>
+        <?php } ?>
+        
         <nav id="menu">
             <?php
                 if (has_nav_menu('main_menu')){

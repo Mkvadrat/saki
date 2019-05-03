@@ -89,6 +89,40 @@ if(function_exists('register_nav_menus')){
 	);
 }
 
+//Регистрируем sidebar
+function register_my_widgets(){
+	register_sidebar( array(
+		'name' => "Виджет меню для страниц",
+		'id' => 'menu-page',
+		'description' => 'Меню будет показано на страницах в правой колонке сайта',
+		'before_widget' => '<div id="%1$s" class="sidebar__menu %2$s">', // по умолчанию виджеты выводятся <li>-списком
+		'after_widget' => '</div>',
+		'before_title' => '',
+		'after_title' => ''
+	) );
+	
+	register_sidebar( array(
+		'name' => "Виджет формы бронирования для страниц",
+		'id' => 'travelline-page',
+		'description' => 'Форма бронирования будет показана на страницах в правой колонке сайта',
+		'before_widget' => '<div id="%1$s" class="booking__block %2$s">', // по умолчанию виджеты выводятся <li>-списком
+		'after_widget' => '</div>',
+		'before_title' => '',
+		'after_title' => ''
+	) );
+	
+	register_sidebar( array(
+		'name' => "Виджет баннера для страниц",
+		'id' => 'banner-page',
+		'description' => 'Виджет баннера будет показан на страницах в правой колонке сайта',
+		'before_widget' => '<div id="%1$s" class="banner__sidebar %2$s">', // по умолчанию виджеты выводятся <li>-списком
+		'after_widget' => '</div>',
+		'before_title' => '',
+		'after_title' => ''
+	) );
+}
+add_action( 'widgets_init', 'register_my_widgets' );
+
 //Изображение в шапке сайта
 $args = array(
 	'width'         => 255,
@@ -405,6 +439,26 @@ function prod_custom_faq_columns($column){
 	}
 }
 add_action("manage_posts_custom_column",  "prod_custom_faq_columns");
+
+/**********************************************************************************************************************************************************
+***********************************************************************************************************************************************************
+*********************************************************************ШОРТКОДЫ*******************************************************************
+***********************************************************************************************************************************************************
+***********************************************************************************************************************************************************/
+//Вывод страниц из родительской 
+function my_list_child_pages() { 
+	global $post;
+	if ( is_page() && $post->post_parent ){
+		$childpages = wp_list_pages( 'sort_column=menu_order&title_li=&child_of=' . $post->post_parent . '&echo=0' );
+	}else{
+		$childpages = wp_list_pages( 'sort_column=menu_order&title_li=&child_of=' . $post->ID . '&echo=0' );
+	}
+	if ( $childpages ) {
+		$string = '<ul>' . $childpages . '</ul>';
+	}
+	return $string;
+}
+add_shortcode('my_childpages', 'my_list_child_pages');
 
 function getFaqs($atts){
 	$output = '';
