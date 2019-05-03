@@ -107,9 +107,11 @@ Version: 1.0
 </div>
 
 <div style="display: none;">
+    <?php if( is_front_page() ) { ?>
     <div id="inline1" style="width:100%;height:100%;">
         <?php echo getMeta('map_header_main_page'); ?>
     </div>
+    <?php } ?>
     
     <div id="callback" class="hentry">
         <div id="nf-form-1-cont" class="nf-form-cont">
