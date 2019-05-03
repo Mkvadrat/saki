@@ -1006,7 +1006,7 @@ p a {
 }
 
 .section__rooms-home .rooms__grid {
-    width: calc(100% - (100% / 3) - 15px);
+    width: calc(100% - (100% / 3) - 20px);
 }
 
 .rooms__info h3 {
@@ -1697,6 +1697,20 @@ p a {
     padding: 30px 20px 0;
     background: #fff;
     width: 73%;
+}
+
+.section__rooms-home .rooms__grid {
+    padding: 0;
+    background: transparent;
+}
+
+.section__rooms-home .rooms__grid .b-table-room {
+    padding-left: 20px;
+    padding-right: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap;
 }
 
 .sidebar__right {
