@@ -39,9 +39,9 @@ get_header();
                         ?>
                                 <div class="blog-item">
                                     <?php if(!empty($image_url)){ ?>
-                                       <img src="<?php echo $image_url[0]; ?>" alt="<?php echo get_post_meta( get_post_thumbnail_id($post->ID), '_wp_attachment_image_alt', true ); ?>" style="width:320px; height: 214px;">
+                                       <img src="<?php echo $image_url[0]; ?>" alt="<?php echo get_post_meta( get_post_thumbnail_id($post->ID), '_wp_attachment_image_alt', true ); ?>">
                                     <?php }else{ ?>
-                                       <img src="<?php echo esc_url( get_template_directory_uri() ); ?>/img/no_image.jpg" alt="" style="width:320px; height: 214px;">
+                                       <img src="<?php echo esc_url( get_template_directory_uri() ); ?>/img/no_image.jpg" alt="">
                                     <?php } ?>
                                     
                                     <div class="content">
@@ -170,9 +170,9 @@ get_header();
                                                 $image_url = wp_get_attachment_image_src( get_post_thumbnail_id($media->ID), 'full');
                                         ?>
                                                     <?php if(!empty($image_url)){ ?>
-                                                       <img src="<?php echo $image_url[0]; ?>" alt="<?php echo get_post_meta( get_post_thumbnail_id($media->ID), '_wp_attachment_image_alt', true ); ?>" style="width:320px; height: 214px;">
+                                                        <div class="blog__img" style="background-image: url('<?php echo $image_url[0]; ?>')" ></div>
                                                     <?php }else{ ?>
-                                                       <img src="<?php echo esc_url( get_template_directory_uri() ); ?>/img/no_image.jpg" alt="" style="width:320px; height: 214px;">
+                                                        <div class="blog__img" style="background-image: url('<?php echo esc_url( get_template_directory_uri() ); ?>/img/no_image.jpg')" ></div>
                                                     <?php } ?>
                                                     <div class="content">
                                                         <h4><a href="<?php echo get_permalink($media->ID); ?>"><?php echo wp_trim_words( $media->post_title, 15, '...' ); ?></a></h4>
@@ -216,9 +216,9 @@ get_header();
                                                 $image_url = wp_get_attachment_image_src( get_post_thumbnail_id($uncos->ID), 'full');
                                         ?>
                                                     <?php if(!empty($image_url)){ ?>
-                                                       <img src="<?php echo $image_url[0]; ?>" alt="<?php echo get_post_meta( get_post_thumbnail_id($uncos->ID), '_wp_attachment_image_alt', true ); ?>" style="width:320px; height: 214px;">
+                                                        <div class="blog__img" style="background-image: url('<?php echo $image_url[0]; ?>')" ></div>
                                                     <?php }else{ ?>
-                                                       <img src="<?php echo esc_url( get_template_directory_uri() ); ?>/img/no_image.jpg" alt="" style="width:320px; height: 214px;">
+                                                        <div class="blog__img" style="background-image: url('<?php echo esc_url( get_template_directory_uri() ); ?>/img/no_image.jpg')" ></div>
                                                     <?php } ?>
                                                     <div class="content">
                                                         <h4><a href="<?php echo get_permalink($uncos->ID); ?>"><?php echo wp_trim_words( $uncos->post_title, 15, '...' ); ?></a></h4>
