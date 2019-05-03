@@ -1428,7 +1428,7 @@ p a {
     margin-bottom: 20px;
 }
 
-.contact__info-home .accordion-group {
+.accordion-group {
     border-left: none;
     border-top: none;
     border-right: none;
@@ -1436,18 +1436,18 @@ p a {
     border-bottom: none;
 }
 
-.contact__info-home .accordion-heading {
+.accordion-heading {
     border-bottom: 0;
 }
 
-.contact__info-home .accordion-inner {
+.accordion-inner {
     border-top: none;
     padding: 20px 15px;
     padding-bottom: 10px;
     float: left;
 }
 
-.contact__info-home .accordion-group {
+.accordion-group {
     margin-bottom: 0;
     border: none;
     -webkit-border-radius: 4px;
@@ -1455,7 +1455,7 @@ p a {
     border-radius: 0;
 }
 
-.contact__info-home .accordion-inner p {
+.accordion-inner p {
     color: #fff;
 }
 
@@ -2458,15 +2458,87 @@ h4 {
     max-width: 100%;
     width: 100%;
 }
+
 .gsInformer {
     max-width: 100%;
 }
-.blog__img{
+
+.blog__img {
     height: 214px;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
 }
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+    margin-bottom: 1em;
+    border: none;
+}
+
+table td, table th {
+    padding: 8px;
+    border: none;
+    background: none;
+    text-align: left;
+}
+
+table thead th {
+    border-bottom: 1px solid #ddd;
+    font-weight: 700;
+    vertical-align: middle;
+    background: #40484f;
+    color: #fff;
+    text-align: center;
+}
+
+table tbody td {
+    border: solid 1px #a1a3a6;
+    text-align: center;
+    vertical-align: middle !important;
+}
+
+table tbody td {
+    border-top: 1px solid #ddd;
+}
+
+table tr:nth-child(2n) td {
+    background-color: #f9f9f9;
+}
+
+table td.title,
+table tr:nth-child(2n) td.title,
+table tr:nth-child(2n + 1) td.title {
+    background-color: #d53d97;
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+table tr:hover td {
+    background-color: #f3f3f3;
+}
+
+table td h3 {
+    color: #d53d97;
+    font-weight: 600 !important;
+    text-transform: uppercase;
+    margin: 0;
+    padding: 0;
+}
+
+.accordion.style_3 {
+    float: none;
+}
+
+.accordion.style_3 .accordion-group .accordion-heading .accordion-toggle {
+    color: #2b3035 !important;
+    text-transform: none;
+}
+
+
 @media (max-width: 1200px) {
     #slider-overlay {
         left: 0;
@@ -2779,6 +2851,7 @@ h4 {
     .section__actions-home .latest_blog .blog-item:last-child {
         width: 100% !important;
     }
+
     .section__actions-home .latest_blog .blog-item img {
         width: 100%;
     }
