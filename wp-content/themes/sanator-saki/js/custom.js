@@ -17,7 +17,7 @@ $(document).ready(function () {
     $(".slider .owl-carousel").owlCarousel({
         items: 1,
         nav: true,
-        navText: ["<img src='wp-content/themes/sanator-saki/img/left.png'>", "<img src='wp-content/themes/sanator-saki/img/right.png'>"]
+        navText: ["<img src='/wp-content/themes/sanator-saki/img/left.png'>", "<img src='/wp-content/themes/sanator-saki/img/right.png'>"]
     });
 
     $(".blog_slider.owl-carousel").owlCarousel({
