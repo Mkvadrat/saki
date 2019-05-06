@@ -1,6 +1,6 @@
 <?php
 /*
-Theme Name: Mkvadrat
+Theme Name: Sanatorium Saki
 Theme URI: http://mkvadrat.com/
 Author: M2
 Author URI: http://mkvadrat.com/
@@ -27,7 +27,7 @@ get_header();
 										foreach($gallery_image as $image) { 
 									?>
 										<div>
-											<img src="<?php echo nextgen_esc_url($image->imageURL); ?>" alt="">
+											<img src="<?php echo nextgen_esc_url($image->imageURL); ?>">
 										</div>
 									<?php
 										}
@@ -44,8 +44,7 @@ get_header();
 							if($gallery_image){
 								foreach($gallery_image as $image) { 
 							?>
-								<a class="lightbox-gallery fancybox" data-fancybox="images" href="<?php echo nextgen_esc_url($image->imageURL); ?>" title=""
-								   rel="gallery-0">
+								<a class="lightbox-gallery fancybox" data-fancybox="images" href="<?php echo nextgen_esc_url($image->imageURL); ?>" rel="gallery-0">
 									<div class="visual lightbox">
 										<img src="<?php echo nextgen_esc_url($image->thumbnailURL); ?>" alt="">
 									</div>

@@ -318,7 +318,7 @@ class header_menu extends Walker_Nav_Menu {
 
 /**********************************************************************************************************************************************************
 ***********************************************************************************************************************************************************
-********************************************************************РАЗДЕЛ "МАГАЗИН" В АДМИНКЕ*************************************************************
+********************************************************************РАЗДЕЛ "НОМЕРА" В АДМИНКЕ**************************************************************
 ***********************************************************************************************************************************************************
 ***********************************************************************************************************************************************************/
 //Вывод в админке раздела
@@ -571,11 +571,11 @@ add_shortcode('faq', 'getFaqs');
 *****************************************************************REMOVE CATEGORY_TYPE SLUG*****************************************************************
 ***********************************************************************************************************************************************************
 ***********************************************************************************************************************************************************/
-//Удаление articles-list из url таксономии
-/*function true_remove_slug_from_articles( $url, $term, $taxonomy ){
+//Удаление category из url таксономии
+function true_remove_slug_from_articles( $url, $term, $taxonomy ){
 
-	$taxonomia_name = 'articles-list';
-	$taxonomia_slug = 'articles-list';
+	$taxonomia_name = 'category';
+	$taxonomia_slug = 'category';
 
 	if ( strpos($url, $taxonomia_slug) === FALSE || $taxonomy != $taxonomia_name ) return $url;
 
@@ -583,12 +583,12 @@ add_shortcode('faq', 'getFaqs');
 
 	return $url;
 }
-add_filter( 'term_link', 'true_remove_slug_from_articles', 10, 3 );*/
+add_filter( 'term_link', 'true_remove_slug_from_articles', 10, 3 );
 
 //Перенаправление articles-list в случае удаления category
-/*function parse_request_url_articles( $query ){
+function parse_request_url_articles( $query ){
 
-	$taxonomia_name = 'articles-list';
+	$taxonomia_name = 'category';
 
 	if( $query['attachment'] ) :
 		$condition = true;
@@ -634,7 +634,7 @@ add_filter( 'term_link', 'true_remove_slug_from_articles', 10, 3 );*/
 	return $query;
 
 }
-add_filter('request', 'parse_request_url_articles', 1, 1 );*/
+add_filter('request', 'parse_request_url_articles', 1, 1 );
 
 //Удаление rooms-list из url таксономии
 function true_remove_slug_from_rooms( $url, $term, $taxonomy ){

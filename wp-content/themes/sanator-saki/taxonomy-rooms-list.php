@@ -1,10 +1,10 @@
 <?php
 /*
-Theme Name: Psychologue
+Theme Name: Sanatorium Saki
 Theme URI: https://mkvadrat.com/
 Author: mkvadrat
 Author URI: https://mkvadrat.com/
-Description: Тема Psychologue
+Description: Тема для сайта http://mkvadrat.com/
 Version: 1.0
 */
 
@@ -26,7 +26,10 @@ get_header();
 									)
 								),
 									'post_type' => 'rooms',
-									'numberposts' => -1
+									'numberposts' => -1,
+									'post_status' => 'publish',
+									'orderby'     => 'date',
+									'order'       => 'DESC',
 							);
 				
 							$rooms_list = get_posts( $args );
@@ -79,6 +82,10 @@ get_header();
                             <!-- Portfolio Normal Mode End -->
 							<?php } ?>
                         </section>
+						<?php }else{ ?>
+						<section class="portfolio-preview-items">
+							<p style="text-align: center;">Номера не найдены!</p>
+						</section>	
 						<?php } ?>
 
 						<?php
