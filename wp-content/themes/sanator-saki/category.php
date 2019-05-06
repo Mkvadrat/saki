@@ -45,7 +45,6 @@ get_header();
                                 <div class="scaleRotateIn">
                                     <div class="gitem-zone" style="background-image: url('<?php echo $image_url[0] ? $image_url[0] : esc_url( get_template_directory_uri() ) . '/img/no_image.jpg' ?>');">
                                         <a href="<?php echo get_permalink($post->ID); ?>" class="gitem-link"></a>
-                                        <img src="img/gift-action.jpg" alt="">
                                     </div>
                                     <div class="gitem-zone gitem-zone-2">
                                         <a href="<?php echo get_permalink($post->ID); ?>" class="gitem-link"></a>
@@ -59,12 +58,18 @@ get_header();
                             <?php } ?>
                         </section>
                         <?php } ?>
+                        
+                        <?php
+							if ( function_exists('dynamic_sidebar') )
+								dynamic_sidebar('sharing-page');
+						?>
                     </div>
                     <div class="sidebar__right">
-                        <div class="booking__block">Виджет бронирования номеров</div>
-                        <div class="banner__sidebar">
-                            <a href="http://sak-vojazh.ru/" target="_blank"><img src="img/sakvojazh2.gif" alt="sakvojazh2"></a>
-                        </div>
+                        <?php
+                            if ( function_exists('dynamic_sidebar') )
+                                dynamic_sidebar('travelline-page');
+                                dynamic_sidebar('banner-page');
+                        ?>
                     </div>
                 </div>
             </div>
