@@ -17,7 +17,7 @@ get_header();
                 <h1><?php the_title(); ?></h1>
                 <div class="single__slider">
                     <div class="main-slider">
-                        <div class="slider">
+                        <div class="slider__single">
                             <div class="owl-carousel">
 								<?php
 									global $nggdb;
