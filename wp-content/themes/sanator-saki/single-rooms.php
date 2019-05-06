@@ -17,7 +17,7 @@ get_header();
                 <h1><?php the_title(); ?></h1>
                 <div class="single__slider">
                     <div class="main-slider">
-                        <div class="slider__single">
+                        <div class="slider slider__single">
                             <div class="owl-carousel">
 								<?php
 									global $nggdb;
@@ -26,9 +26,7 @@ get_header();
 									if($gallery_image){
 										foreach($gallery_image as $image) { 
 									?>
-										<div>
-											<img src="<?php echo nextgen_esc_url($image->imageURL); ?>" alt="">
-										</div>
+										<div style="background-image: url('<?php echo nextgen_esc_url($image->imageURL); ?>')"></div>
 									<?php
 										}
 									}

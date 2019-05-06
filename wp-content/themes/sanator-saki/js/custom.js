@@ -20,13 +20,6 @@ $(document).ready(function () {
         navText: ["<img src='/wp-content/themes/sanator-saki/img/left.png'>", "<img src='/wp-content/themes/sanator-saki/img/right.png'>"]
     });
 
-    $(".slider__single .owl-carousel").owlCarousel({
-        items: 1,
-        nav: true,
-        navText: ["<img src='/wp-content/themes/sanator-saki/img/left.png'>", "<img src='/wp-content/themes/sanator-saki/img/right.png'>"],
-        autoHeight: true
-    });
-
     $(".blog_slider.owl-carousel").owlCarousel({
         items: 1
     });
