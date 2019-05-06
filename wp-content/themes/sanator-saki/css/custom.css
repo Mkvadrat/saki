@@ -2194,6 +2194,7 @@ h1 > a, h2 > a, h3 > a, h4 > a, h5 > a, h6 > a {
 }
 
 .gitem-zone {
+    height: 143px;
     background-repeat: no-repeat;
     background-position: 50% 50%;
     background-size: cover;
