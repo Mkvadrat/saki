@@ -10,7 +10,7 @@ Version: 1.0
 
 get_header(); 
 ?>
-    
+    <?php if(get_queried_object()->term_id == 14) { ?>
     <div id="content">
         <div class="page__content">
             <div class="max__wrap">
@@ -57,6 +57,10 @@ get_header();
                             </div>
                             <?php } ?>
                         </section>
+                        <?php }else{ ?>
+                        <section class="portfolio-preview-items">
+							<p style="text-align: center;">Статьи не найдены!</p>
+						</section>	
                         <?php } ?>
                         
                         <?php
@@ -75,5 +79,87 @@ get_header();
             </div>
         </div>
     </div>
+    <?php }else{ ?>
+    <div id="content">
+        <div class="news__content">
+            <div class="max__wrap">
+                <div class="content__with-sidebar">
+                    <div class="news__grid">
+                        <?php
+							$args = array(
+								'tax_query' => array(
+									array(
+										'taxonomy' => 'category',
+										'field' => 'id',
+										'terms' => array( get_queried_object()->term_id )
+									)
+								),
+									'post_type' => 'post',
+									'numberposts' => -1,
+                                    'post_status' => 'publish',
+                                    'orderby'     => 'date',
+                                    'order'       => 'DESC'
+							);
+				
+							$posts = get_posts( $args );
+							
+							if($posts){
+						?>
+                        <span class="timeline-border"></span>
+
+                        <?php foreach($posts as $post){ ?>
+                            <?php
+                                $image_url = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), 'full'); 
+                            ?>
+                            <div class="news__item">
+                                <div class="timeline">
+                                    <div class="date">
+                                        <span class="day">20</span>
+                                        <span class="month">Мар</span>
+                                    </div>
+                                </div>
+                                <div class="post__box box__shadow">
+                                    <div class="media">
+                                        <a href="<?php echo get_permalink($post->ID); ?>">
+                                            <div class="overlay">
+                                                <div class="post_type_circle"><i class="fa fa-angle-right" aria-hidden="true"></i></div>
+                                            </div>
+                                        </a>
+                                        <img src="<?php echo $image_url[0] ? $image_url[0] : esc_url( get_template_directory_uri() ) . '/img/no_image.jpg' ?>" alt="">
+                                    </div>
+                                    <div class="content">
+                                        <h3>
+                                            <a href="<?php echo get_permalink($post->ID); ?>">Выездное совещание по проблемным вопросам городского округа Саки в конференц-зале санатория «Саки»</a>
+                                        </h3>
+                                        
+                                        <div class="text">Сергей Аксёнов провёл выездное совещание по проблемным вопросам городского округа Саки</div>
+                                        <div class="button__box">
+                                            <a href="<?php echo get_permalink($post->ID); ?>" class="btn-bt default"><span>Читать полностью</span><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php } ?>
+                        <?php } ?>
+                        
+                        
+                    </div>
+                    <div class="sidebar__right">
+                        <div class="booking__block">Виджет бронирования номеров</div>
+                        <div class="banner__sidebar">
+                            <a href="http://sak-vojazh.ru/" target="_blank"><img src="img/sakvojazh2.gif"
+                                                                                 alt="sakvojazh2"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    
+    
+    
+    <?php } ?>
     
 <?php get_footer(); ?>
