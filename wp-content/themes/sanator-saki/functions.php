@@ -47,6 +47,7 @@ function mk_scripts(){
 		wp_enqueue_script( 'carousel-min', get_template_directory_uri() . '/js/owl.carousel.min.js', '', '', true );
 		wp_enqueue_script( 'custom-min', get_template_directory_uri() . '/js/custom.js', '', '', true );
 		wp_enqueue_script( 'fancybox-min', 'https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js', '', '', true );
+		wp_enqueue_script( 'share2-min', '//yastatic.net/share2/share.js', '', '', true );
 	}
 }
 add_action( 'wp_enqueue_scripts', 'mk_scripts' );
@@ -92,7 +93,27 @@ if(function_exists('register_nav_menus')){
 //Регистрируем sidebar
 function register_my_widgets(){
 	register_sidebar( array(
-		'name' => "Виджет меню для страниц",
+		'name' => "Виджет социальных сетей",
+		'id' => 'sharing-page',
+		'description' => 'Виджет социальных сетей будет показан на страницах в нижней части сайта',
+		'before_widget' => '', // по умолчанию виджеты выводятся <li>-списком
+		'after_widget' => '',
+		'before_title' => '',
+		'after_title' => ''
+	) );
+	
+	register_sidebar( array(
+		'name' => "Виджет направления санаторно-курортного лечения",
+		'id' => 'direction-page',
+		'description' => 'Виджет направления санаторно-курортного лечения будет показан на страницах номеров в нижней части сайта',
+		'before_widget' => '<div class="services__med">', // по умолчанию виджеты выводятся <li>-списком
+		'after_widget' => '</div>',
+		'before_title' => '<h2 class="custom_heading">',
+		'after_title' => '</h2>'
+	) );
+	
+	register_sidebar( array(
+		'name' => "Виджет меню",
 		'id' => 'menu-page',
 		'description' => 'Меню будет показано на страницах в правой колонке сайта',
 		'before_widget' => '<div id="%1$s" class="sidebar__menu %2$s">', // по умолчанию виджеты выводятся <li>-списком
@@ -102,7 +123,7 @@ function register_my_widgets(){
 	) );
 	
 	register_sidebar( array(
-		'name' => "Виджет формы бронирования для страниц",
+		'name' => "Виджет формы бронирования",
 		'id' => 'travelline-page',
 		'description' => 'Форма бронирования будет показана на страницах в правой колонке сайта',
 		'before_widget' => '<div id="%1$s" class="booking__block %2$s">', // по умолчанию виджеты выводятся <li>-списком
@@ -112,7 +133,7 @@ function register_my_widgets(){
 	) );
 	
 	register_sidebar( array(
-		'name' => "Виджет баннера для страниц",
+		'name' => "Виджет баннера",
 		'id' => 'banner-page',
 		'description' => 'Виджет баннера будет показан на страницах в правой колонке сайта',
 		'before_widget' => '<div id="%1$s" class="banner__sidebar %2$s">', // по умолчанию виджеты выводятся <li>-списком
@@ -544,5 +565,170 @@ function getFaqs($atts){
         echo $output;
 }
 add_shortcode('faq', 'getFaqs');
+
+/**********************************************************************************************************************************************************
+***********************************************************************************************************************************************************
+*****************************************************************REMOVE CATEGORY_TYPE SLUG*****************************************************************
+***********************************************************************************************************************************************************
+***********************************************************************************************************************************************************/
+//Удаление articles-list из url таксономии
+/*function true_remove_slug_from_articles( $url, $term, $taxonomy ){
+
+	$taxonomia_name = 'articles-list';
+	$taxonomia_slug = 'articles-list';
+
+	if ( strpos($url, $taxonomia_slug) === FALSE || $taxonomy != $taxonomia_name ) return $url;
+
+	$url = str_replace('/' . $taxonomia_slug, '', $url);
+
+	return $url;
+}
+add_filter( 'term_link', 'true_remove_slug_from_articles', 10, 3 );*/
+
+//Перенаправление articles-list в случае удаления category
+/*function parse_request_url_articles( $query ){
+
+	$taxonomia_name = 'articles-list';
+
+	if( $query['attachment'] ) :
+		$condition = true;
+		$main_url = $query['attachment'];
+	else:
+		$condition = false;
+		$main_url = $query['name'];
+	endif;
+
+	$termin = get_term_by('slug', $main_url, $taxonomia_name);
+
+	if ( isset( $main_url ) && $termin && !is_wp_error( $termin )):
+
+		if( $condition ) {
+			unset( $query['attachment'] );
+			$parent = $termin->parent;
+			while( $parent ) {
+				$parent_term = get_term( $parent, $taxonomia_name);
+				$main_url = $parent_term->slug . '/' . $main_url;
+				$parent = $parent_term->parent;
+			}
+		} else {
+			unset($query['name']);
+		}
+
+		switch( $taxonomia_name ):
+			case 'category':{
+				$query['category_name'] = $main_url;
+				break;
+			}
+			case 'post_tag':{
+				$query['tag'] = $main_url;
+				break;
+			}
+			default:{
+				$query[$taxonomia_name] = $main_url;
+				break;
+			}
+		endswitch;
+
+	endif;
+
+	return $query;
+
+}
+add_filter('request', 'parse_request_url_articles', 1, 1 );*/
+
+//Удаление rooms-list из url таксономии
+function true_remove_slug_from_rooms( $url, $term, $taxonomy ){
+
+	$taxonomia_name = 'rooms-list';
+	$taxonomia_slug = 'rooms-list';
+
+	if ( strpos($url, $taxonomia_slug) === FALSE || $taxonomy != $taxonomia_name ) return $url;
+
+	$url = str_replace('/' . $taxonomia_slug, '', $url);
+
+	return $url;
+}
+add_filter( 'term_link', 'true_remove_slug_from_rooms', 10, 3 );
+
+//Перенаправление rooms-list в случае удаления category
+function parse_request_url_rooms( $query ){
+
+	$taxonomia_name = 'rooms-list';
+
+	if( $query['attachment'] ) :
+		$condition = true;
+		$main_url = $query['attachment'];
+	else:
+		$condition = false;
+		$main_url = $query['name'];
+	endif;
+
+	$termin = get_term_by('slug', $main_url, $taxonomia_name);
+
+	if ( isset( $main_url ) && $termin && !is_wp_error( $termin )):
+
+		if( $condition ) {
+			unset( $query['attachment'] );
+			$parent = $termin->parent;
+			while( $parent ) {
+				$parent_term = get_term( $parent, $taxonomia_name);
+				$main_url = $parent_term->slug . '/' . $main_url;
+				$parent = $parent_term->parent;
+			}
+		} else {
+			unset($query['name']);
+		}
+
+		switch( $taxonomia_name ):
+			case 'category':{
+				$query['category_name'] = $main_url;
+				break;
+			}
+			case 'post_tag':{
+				$query['tag'] = $main_url;
+				break;
+			}
+			default:{
+				$query[$taxonomia_name] = $main_url;
+				break;
+			}
+		endswitch;
+
+	endif;
+
+	return $query;
+
+}
+add_filter('request', 'parse_request_url_rooms', 1, 1 );
+
+/**********************************************************************************************************************************************************
+***********************************************************************************************************************************************************
+*****************************************************************REMOVE POST_TYPE SLUG*********************************************************************
+***********************************************************************************************************************************************************
+***********************************************************************************************************************************************************/
+//Удаление sluga из url таксономии 
+function remove_slug_from_post( $post_link, $post, $leavename ) {
+	if ( 'rooms' != $post->post_type /*&& 'shops' != $post->post_type && 'workshop' != $post->post_type*/ || 'publish' != $post->post_status ) {
+		return $post_link;
+	}
+		$post_link = str_replace( '/' . $post->post_type . '/', '/', $post_link );
+	return $post_link;
+}
+add_filter( 'post_type_link', 'remove_slug_from_post', 10, 3 );
+
+function parse_request_url_post( $query ) {
+	if ( ! $query->is_main_query() )
+		return;
+
+	if ( 2 != count( $query->query ) || ! isset( $query->query['page'] ) ) {
+		return;
+	}
+
+	if ( ! empty( $query->query['name'] ) ) {
+		$query->set( 'post_type', array( 'post', 'rooms', 'page' ) );
+	}
+}
+add_action( 'pre_get_posts', 'parse_request_url_post' );
+
 
 
