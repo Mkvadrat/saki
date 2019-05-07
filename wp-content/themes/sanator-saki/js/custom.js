@@ -11,13 +11,14 @@ document.addEventListener(
     }
 );
 
-
 $(document).ready(function () {
 
     $(".slider .owl-carousel").owlCarousel({
         items: 1,
         nav: true,
-        navText: ["<img src='/wp-content/themes/sanator-saki/img/left.png'>", "<img src='/wp-content/themes/sanator-saki/img/right.png'>"]
+        navText: ["<img src='/wp-content/themes/sanator-saki/img/left.png'>", "<img src='/wp-content/themes/sanator-saki/img/right.png'>"],
+        autoplay:true,
+        autoplayTimeout:6000
     });
 
     $(".blog_slider.owl-carousel").owlCarousel({
@@ -95,5 +96,14 @@ $(document).ready(function () {
 
     $(".maps-sanatorium").fancybox({
         touch: false
+    });
+
+    //Отзывы
+    $('#commentform *[name="confirm"]').on('change', function () {
+        if ($(this).is(':checked')) {
+            $('.form-bottomed *[type="submit"]').removeAttr('disabled');
+        } else {
+            $('.form-bottomed *[type="submit"]').attr('disabled', 'disabled');
+        }
     });
 });

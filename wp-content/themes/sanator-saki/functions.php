@@ -48,6 +48,7 @@ function mk_scripts(){
 		wp_enqueue_script( 'custom-min', get_template_directory_uri() . '/js/custom.js', '', '', true );
 		wp_enqueue_script( 'fancybox-min', 'https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js', '', '', true );
 		wp_enqueue_script( 'share2-min', '//yastatic.net/share2/share.js', '', '', true );
+		wp_enqueue_script( 'reviews-min', get_template_directory_uri() . '/js/reviews.js', '', '', true );
 	}
 }
 add_action( 'wp_enqueue_scripts', 'mk_scripts' );
@@ -461,6 +462,96 @@ function prod_custom_faq_columns($column){
 }
 add_action("manage_posts_custom_column",  "prod_custom_faq_columns");
 
+///////////
+add_action('init', 'staff_register', 1);
+
+/* Staff Register */
+
+function staff_register() 
+{
+
+	$labels = array(
+		'name' => _x('Team', 'post type general name', 'codeless'),
+		'singular_name' => _x('Staff Entry', 'post type singular name', 'codeless'),
+		'add_new' => _x('Add New', 'staff', 'codeless'),
+		'add_new_item' => __('Add New Staff Entry', 'codeless'),
+		'edit_item' => __('Edit Staff Entry', 'codeless'),
+		'new_item' => __('New Staff Entry', 'codeless'),
+		'view_item' => __('View Staff Entry', 'codeless'),
+		'search_items' => __('Search Staff Entries', 'codeless'),
+		'not_found' =>  __('No Staff Entries found', 'codeless'),
+		'not_found_in_trash' => __('No Staff Entries found in Trash', 'codeless'), 
+		'parent_item_colon' => ''
+	);
+	
+	$slugRule = "staff_trusted";
+	
+	$args = array(
+		'labels' => $labels,
+		'public' => true,
+		'show_ui' => true,
+		'capability_type' => 'post',
+		'hierarchical' => false,
+		'rewrite' => array('slug'=>$slugRule,'with_front'=>true),
+		'query_var' => true,
+		'show_in_nav_menus'=> false,
+		'supports' => array('title','thumbnail','editor')
+	);
+	
+	
+	
+	register_post_type( 'staff' , $args );
+	
+	
+	register_taxonomy("staff_entries", 
+		array("staff"), 
+		array(	"hierarchical" => true, 
+		"label" => "Staff Categories", 
+		"singular_label" => "Staff Categories", 
+		"rewrite" => true,
+		"query_var" => true
+	));  
+}
+
+add_filter("manage_edit-staff_columns", "prod_edit_staff_columns");
+add_action("manage_posts_custom_column",  "prod_custom_staff_columns");
+
+
+function prod_edit_staff_columns($columns)
+{
+	$newcolumns = array(
+		"cb" => "<input type=\"checkbox\" />",
+		
+		"title" => "Title",
+		"staff_entries" => "Categories"
+	);
+	
+	$columns= array_merge($newcolumns, $columns);
+	
+	return $columns;
+}
+
+function prod_custom_staff_columns($column)
+{
+	global $post;
+	switch ($column)
+	{
+		
+	
+		case "description":
+		
+		break;
+		case "price":
+		
+		break;
+		case "staff_entries":
+		echo get_the_term_list($post->ID, 'staff_entries', '', ', ','');
+		break;
+	}
+}
+///////////
+
+
 /**********************************************************************************************************************************************************
 ***********************************************************************************************************************************************************
 *********************************************************************ШОРТКОДЫ*******************************************************************
@@ -730,5 +821,132 @@ function parse_request_url_post( $query ) {
 }
 add_action( 'pre_get_posts', 'parse_request_url_post' );
 
+/**********************************************************************************************************************************************************
+***********************************************************************************************************************************************************
+*****************************************************************РУССИФИКАТОР ТЕСТА************************************************************************
+***********************************************************************************************************************************************************
+***********************************************************************************************************************************************************/
+function my_quiz_callback_filter( $array ) {
+    $array['no_quiz_found'] = "Не могу найти этот тест!";
+    $array['correct'] = "Вы сделаете это!";
+    $array['wrong'] = "Вы ошиблись";
+    $array['your_answer'] = "Ваш ответ:";
+    $array['correct_answer'] = "Правильный ответ:";
+    $array['question'] = "Le Question:";
+    $array['next'] = "Далее";
+    $array['you_got'] = "Вы ответили правильно на";
+    $array['out_of'] = "из";
+    $array['your_answers'] = "Ваши вопросы викторины";
+    $array['start_quiz'] = "Поехали!";
+    $array['retake_quiz'] = "Хотите пройти тест еще раз?";
+    $array['share_results'] = "Поделитесь своими результатами!";
+    $array['i_got'] = "Я получил";
+    $array['skip_this_step'] = "Пропустить это";
+    $array['your_name'] = "Ваше имя";
+    $array['your_email'] = "Ваш email";
 
+    return $array;
+}
+add_filter( 'fca_qc_quiz_text', 'my_quiz_callback_filter' );
+
+
+/**********************************************************************************************************************************************************
+***********************************************************************************************************************************************************
+***********************************************************************КОММЕНТАРИИ*************************************************************************
+***********************************************************************************************************************************************************
+***********************************************************************************************************************************************************/
+//Ajax функция добавления комментариев
+function true_add_ajax_comment(){
+	global $wpdb;
+	$comment_post_ID = isset($_POST['comment_post_ID']) ? (int) $_POST['comment_post_ID'] : 0;
+
+	$post = get_post($comment_post_ID);
+
+	if ( empty($post->comment_status) ) {
+		do_action('comment_id_not_found', $comment_post_ID);
+		exit;
+	}
+
+	$status = get_post_status($post);
+
+	$status_obj = get_post_status_object($status);
+
+	/*
+	 * различные проверки комментария
+	 */
+	if ( !comments_open($comment_post_ID) ) {
+		do_action('comment_closed', $comment_post_ID);
+		wp_die( __('Sorry, comments are closed for this item.') );
+	} elseif ( 'trash' == $status ) {
+		do_action('comment_on_trash', $comment_post_ID);
+		exit;
+	} elseif ( !$status_obj->public && !$status_obj->private ) {
+		do_action('comment_on_draft', $comment_post_ID);
+		exit;
+	} elseif ( post_password_required($comment_post_ID) ) {
+		do_action('comment_on_password_protected', $comment_post_ID);
+		exit;
+	} else {
+		do_action('pre_comment_on_post', $comment_post_ID);
+	}
+
+	$comment_author       = ( isset($_POST['author']) )  ? trim(strip_tags($_POST['author'])) : null;
+	$comment_author_email = ( isset($_POST['email']) )   ? trim($_POST['email']) : null;
+	$comment_content      = ( isset($_POST['comment']) ) ? trim($_POST['comment']) : null;
+
+	/*
+	 * проверяем, залогинен ли пользователь
+	 */
+	$error_comment = array();
+
+	$user = wp_get_current_user();
+	if ( $user->exists() ) {
+		if ( empty( $user->display_name ) )
+		$user->display_name=$user->user_login;
+		$comment_author       = $wpdb->escape($user->display_name);
+		$comment_author_email = $wpdb->escape($user->user_email);
+		
+		$user_ID = get_current_user_id();
+		if ( current_user_can('unfiltered_html') ) {
+			if ( wp_create_nonce('unfiltered-html-comment_' . $comment_post_ID) != $_POST['_wp_unfiltered_html_comment'] ) {
+				kses_remove_filters(); // start with a clean slate
+				kses_init_filters(); // set up the filters
+			}
+		}
+	} else {
+		if ( get_option('comment_registration') || 'private' == $status )
+			$error_comment['error'] = wp_die( 'Ошибка: Вы должны зарегистрироваться или войти, чтобы оставлять комментарии.' );
+	}
+
+	$comment_type = '';
+
+	/*
+	 * проверяем, заполнил ли пользователь все необходимые поля
+ 	 */
+	if ( get_option('require_name_email') && !$user->exists() ) {
+		if ( 6 > strlen($comment_author_email) || '' == $comment_author ){
+			$error_comment['error'] = wp_die( 'Ошибка: заполните необходимые поля (Имя, Email).' );
+		}elseif ( !is_email($comment_author_email)){
+			$error_comment['error'] = wp_die( 'Ошибка: введенный вами email некорректный.' );
+		}
+	}
+		
+	if ( '' == trim($comment_content) ||  '<p><br></p>' == $comment_content ){
+		$error_comment['error'] = wp_die( 'Ошибка: Вы забыли про комментарий.' );
+	}
+
+	wp_json_encode($error_comment);
+
+	/*
+	 * добавляем новый коммент и сразу же обращаемся к нему
+	 */
+	$comment_parent = isset($_POST['comment_parent']) ? absint($_POST['comment_parent']) : 0;
+	$commentdata = compact('comment_post_ID', 'comment_author', 'comment_author_email', 'comment_author_url', 'comment_content', 'comment_type', 'comment_parent', 'user_ID');
+	$comment_id = wp_new_comment( $commentdata );
+	$comment = get_comment($comment_id);
+
+	die();
+}
+add_action('wp_ajax_ajaxcomments', 'true_add_ajax_comment'); // wp_ajax_{значение параметра action}
+add_action('wp_ajax_nopriv_ajaxcomments', 'true_add_ajax_comment'); // wp_ajax_nopriv_{значение параметра action}
 
