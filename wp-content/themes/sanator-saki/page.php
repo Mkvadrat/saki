@@ -16,6 +16,8 @@ get_header(); ?>
                 <div class="content__with-sidebar">
                     <div class="rooms__grid">
                         <div class="text__block">
+							<?php the_post_thumbnail('large'); ?>
+							
                             <?php if (have_posts()): while (have_posts()): the_post(); ?>
                                 <?php the_content(); ?>
                             <?php endwhile; endif; ?>
