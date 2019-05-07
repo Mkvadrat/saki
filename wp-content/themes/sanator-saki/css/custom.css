@@ -2877,7 +2877,12 @@ table td h3 {
 .testimonials__content{
     background-color: #ffffff;
 }
-
+.slider__single .owl-item div{
+    height: 408px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
 
 
 
@@ -3154,6 +3159,10 @@ table td h3 {
         background-size: contain;
         background-repeat: no-repeat;
         background-position: left bottom;
+    }
+
+    .slider__single .owl-item div {
+        height: 50vw;
     }
 
 }
