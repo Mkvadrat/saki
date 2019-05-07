@@ -114,8 +114,8 @@ get_header();
                             <div class="news__item">
                                 <div class="timeline">
                                     <div class="date">
-                                        <span class="day">20</span>
-                                        <span class="month">Мар</span>
+                                        <span class="day"><?php the_time('j'); ?></span>
+                                        <span class="month"><?php the_time('M'); ?></span>
                                     </div>
                                 </div>
                                 <div class="post__box box__shadow">
@@ -129,10 +129,10 @@ get_header();
                                     </div>
                                     <div class="content">
                                         <h3>
-                                            <a href="<?php echo get_permalink($post->ID); ?>">Выездное совещание по проблемным вопросам городского округа Саки в конференц-зале санатория «Саки»</a>
+                                            <a href="<?php echo get_permalink($post->ID); ?>"><?php echo $post->post_title; ?></a>
                                         </h3>
                                         
-                                        <div class="text">Сергей Аксёнов провёл выездное совещание по проблемным вопросам городского округа Саки</div>
+                                        <div class="text"><?php echo wp_trim_words( $post->post_excerpt, 20, '...' ); ?></div>
                                         <div class="button__box">
                                             <a href="<?php echo get_permalink($post->ID); ?>" class="btn-bt default"><span>Читать полностью</span><i class="fa fa-angle-right" aria-hidden="true"></i></a>
                                         </div>
@@ -142,24 +142,22 @@ get_header();
                         <?php } ?>
                         <?php } ?>
                         
-                        
+                        <?php
+							if ( function_exists('dynamic_sidebar') )
+								dynamic_sidebar('sharing-page');
+						?>
                     </div>
                     <div class="sidebar__right">
-                        <div class="booking__block">Виджет бронирования номеров</div>
-                        <div class="banner__sidebar">
-                            <a href="http://sak-vojazh.ru/" target="_blank"><img src="img/sakvojazh2.gif"
-                                                                                 alt="sakvojazh2"></a>
-                        </div>
+                        <?php
+                            if ( function_exists('dynamic_sidebar') )
+                                dynamic_sidebar('travelline-page');
+                                dynamic_sidebar('banner-page');
+                        ?>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    
-    
-    
-    
-    
     <?php } ?>
     
 <?php get_footer(); ?>
