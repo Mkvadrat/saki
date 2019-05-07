@@ -2000,7 +2000,7 @@ p a {
     top: 0;
     left: 55px;
     width: 1px;
-    height: 88%;
+    height: calc(100% - 90px);
     z-index: 0;
     background: #e7e7e7;
 }
@@ -2181,6 +2181,12 @@ h1 > a, h2 > a, h3 > a, h4 > a, h5 > a, h6 > a {
 
 .actions__grid {
     margin-left: -20px;
+}
+
+.actions__grid::after{
+    content: '';
+    display: table;
+    clear: both;
 }
 
 .action__item {
@@ -2644,7 +2650,9 @@ table td h3 {
     padding-top: 5px;
     border-top: 1px solid #ccc;
     margin-bottom: 40px;
+    margin-top: 20px;
     width: 100%;
+    clear: both;
 }
 
 .ya-share2 {
