@@ -2183,7 +2183,7 @@ h1 > a, h2 > a, h3 > a, h4 > a, h5 > a, h6 > a {
     margin-left: -20px;
 }
 
-.actions__grid::after{
+.actions__grid::after {
     content: '';
     display: table;
     clear: both;
@@ -2558,6 +2558,7 @@ table td h3 {
     color: #2b3035 !important;
     text-transform: none;
 }
+
 .gallery__grid {
     display: flex;
     flex-wrap: wrap;
@@ -2577,6 +2578,7 @@ table td h3 {
     -o-transition: 0.3s;
     transition: 0.3s;
 }
+
 .gallery__item .gallery__img {
     position: relative;
     width: 100%;
@@ -2593,6 +2595,7 @@ table td h3 {
     -o-transition: -o-transform .3s ease-in-out;
     transition: transform .3s ease-in-out;
 }
+
 .gallery__item .gallery__img a {
     position: absolute;
     top: 0;
@@ -2607,6 +2610,7 @@ table td h3 {
     text-decoration: none;
     opacity: 0;
 }
+
 .gallery__item .title {
     border-width: 0 0 6px;
     border-bottom: 6px solid #747982;
@@ -2619,32 +2623,39 @@ table td h3 {
     padding: 0;
     margin-bottom: 20px;
 }
+
 .gallery__item .title:hover {
     border-bottom-color: #db0383;
     color: #db0383;
     background: transparent;
 }
-.gallery__item .gallery__img a:hover{
+
+.gallery__item .gallery__img a:hover {
     opacity: 1;
     color: #fff !important;
 }
-.gallery__item .gallery__img:hover{
+
+.gallery__item .gallery__img:hover {
     -webkit-transform: scale(1.1);
     -ms-transform: scale(1.1);
     -o-transform: scale(1.1);
     transform: scale(1.1);
 }
-.overflow__hidden{
+
+.overflow__hidden {
     overflow: hidden;
 }
-.button__back{
-    color: #fff!important;
+
+.button__back {
+    color: #fff !important;
     margin-bottom: 30px;
     margin-top: 20px;
 }
-.button__back:hover{
-    color: #fff!important;
+
+.button__back:hover {
+    color: #fff !important;
 }
+
 .ya-share2 {
     text-align: right;
     padding-top: 5px;
@@ -2658,6 +2669,7 @@ table td h3 {
 .ya-share2 {
     text-align: right;
 }
+
 .list-gallery-photos {
     display: flex;
     flex-wrap: wrap;
@@ -2665,6 +2677,7 @@ table td h3 {
     justify-content: space-between;
     margin: 0;
 }
+
 .list-gallery-photos li {
     position: relative;
     width: 31.3%;
@@ -2680,14 +2693,17 @@ table td h3 {
     -o-transition: 0.3s;
     transition: 0.3s;
 }
+
 .list-gallery-photos li:nth-child(9n-5), .list-gallery-photos li:nth-child(9n-2) {
     width: 38.5%;
     height: 308px;
 }
-.list-gallery-photos li:nth-child(9n-3),  .list-gallery-photos li:nth-child(9n-4) {
+
+.list-gallery-photos li:nth-child(9n-3), .list-gallery-photos li:nth-child(9n-4) {
     width: 58.5%;
     height: 308px;
 }
+
 .list-gallery-photos li a {
     display: -webkit-box;
     display: -webkit-flex;
@@ -2709,6 +2725,7 @@ table td h3 {
     text-decoration: none;
     z-index: 3;
 }
+
 .list-gallery-photos li a i {
     z-index: 2;
     opacity: 0;
@@ -2719,6 +2736,7 @@ table td h3 {
     -o-transition: 0.3s;
     transition: 0.3s;
 }
+
 .list-gallery-photos li::before {
     content: "";
     position: absolute;
@@ -2734,6 +2752,7 @@ table td h3 {
     -o-transition: 0.3s;
     transition: 0.3s;
 }
+
 .list-gallery-photos li::after {
     content: "";
     position: absolute;
@@ -2749,30 +2768,36 @@ table td h3 {
     -o-transition: 0.3s;
     transition: 0.3s;
 }
+
 .list-gallery-photos li:hover {
     border: 1px solid #d7d7d7;
     background-position: top right;
 }
+
 .list-gallery-photos li:hover::before {
     border: 20px solid #fff;
 }
+
 .list-gallery-photos li:hover::after {
     background-color: rgba(0, 0, 0, 0.5);
 }
+
 .list-gallery-photos li:hover a i {
     opacity: 1;
 }
 
-.testimonial__form h3{
+.testimonial__form h3 {
     font-weight: bold;
     font-size: 1.1rem;
     font-family: 'Open Sans', sans-serif;
     margin: 0;
 }
-.testimonial__form label{
+
+.testimonial__form label {
     display: block;
     margin-bottom: 5px;
 }
+
 .testimonial__form label,
 .testimonial__form input,
 .testimonial__form button,
@@ -2782,7 +2807,7 @@ table td h3 {
     line-height: 20px;
 }
 
-.testimonial__form input{
+.testimonial__form input {
     display: block;
     height: 30px;
     width: 100%;
@@ -2793,11 +2818,12 @@ table td h3 {
     transition: border linear .2s, box-shadow linear .2s;
     background-color: #fff;
     border-radius: 0;
-    box-shadow: none!important;
+    box-shadow: none !important;
     border: 1px solid #c5c6c6;
     color: #747982;
     min-width: 200px;
 }
+
 .testimonial__form textarea {
     height: 100px;
     width: 100%;
@@ -2808,18 +2834,20 @@ table td h3 {
     transition: border linear .2s, box-shadow linear .2s;
     background-color: #fff;
     border-radius: 0;
-    box-shadow: none!important;
+    box-shadow: none !important;
     border: 1px solid #c5c6c6;
     color: #747982;
 }
-.testimonial__form input[type="checkbox"]{
+
+.testimonial__form input[type="checkbox"] {
     margin: 0;
     display: inline-block;
     width: 13px;
     height: 13px;
     min-width: auto;
 }
-.testimonial__form input[type="submit"]{
+
+.testimonial__form input[type="submit"] {
     cursor: pointer;
     outline: 0;
     padding: 5px 12px 5px;
@@ -2831,7 +2859,7 @@ table td h3 {
     text-indent: 0;
     margin-bottom: 15px;
     color: #fff;
-    background: rgba(219,3,131,1);
+    background: rgba(219, 3, 131, 1);
     border: 1px solid rgba(68, 68, 68, 0.00);
     font-size: 15px;
     text-transform: uppercase;
@@ -2842,27 +2870,37 @@ table td h3 {
     font-weight: 500;
     letter-spacing: 1px;
 }
+
 .testimonial__form textarea:focus, .testimonial__form input:focus {
     border-color: rgba(82, 168, 236, 0.8);
     outline: 0;
     outline: thin dotted \9;
 }
+
 .testimonial__form,
-.testimonials__grid{
+.testimonials__grid {
     margin-top: 30px;
 }
-.review_author h3{
+
+.review_author h3 {
     font-size: 15px;
     margin: 0 10px 0 0;
 }
-.review_datePublished{
+
+.review_datePublished {
     font-size: 12px;
     font-style: italic;
 }
-.testimonial__review{
+
+.review_datePublished i {
+    margin-right: 5px;
+}
+
+.testimonial__review {
     display: flex;
     align-items: center;
 }
+
 .testimonial__item blockquote {
     font-size: 14px;
     font-weight: normal;
@@ -2874,6 +2912,7 @@ table td h3 {
     margin-inline-end: 40px;
     border: none;
 }
+
 .testimonial__item blockquote p {
     font-size: 14px;
     font-weight: normal;
@@ -2882,17 +2921,57 @@ table td h3 {
     line-height: 120%;
     margin: 2px 0 2px;
 }
-.testimonials__content{
+
+.testimonials__content {
     background-color: #ffffff;
 }
-.slider__single .owl-item div{
+
+.slider__single .owl-item div {
     height: 408px;
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
 }
 
+.paggination {
+    padding: 0;
+    margin: 0 0 30px;
+    list-style: none;
+    display: flex;
+}
 
+.paggination li a {
+    display: block;
+    float: left;
+    margin: 0 1px 0 1px;
+    padding: 6px 10px 6px 10px;
+    line-height: 16px;
+    text-decoration: none;
+    width: auto;
+    color: #fff;
+    background: #555;
+    cursor: pointer;
+    font-size: 10px;
+}
+
+.paggination li .current {
+    display: block;
+    float: left;
+    margin: 0 1px 0 1px;
+    padding: 6px 10px 6px 10px;
+    line-height: 16px;
+    text-decoration: none;
+    width: auto;
+    background: #3279BB;
+    color: #fff;
+    cursor: default;
+    font-size: 10px;
+}
+
+.paggination li a:hover {
+    background: #3279BB;
+    color: #fff !important;
+}
 
 
 @media (max-width: 1200px) {
@@ -3007,11 +3086,11 @@ table td h3 {
         display: flex;
     }
 
-    .rooms__grid{
+    .rooms__grid {
         order: 2;
     }
 
-    .testimonials__content .sidebar__right{
+    .testimonials__content .sidebar__right {
         order: 1;
     }
 }
@@ -3290,6 +3369,7 @@ table td h3 {
         width: 100% !important;
         height: 200px !important;
     }
+
     .list-gallery-photos li:hover {
         background-position: center;
     }
