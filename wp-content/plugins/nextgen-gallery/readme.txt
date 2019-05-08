@@ -2,7 +2,7 @@
 Contributors: photocrati, imagely
 Tags: wordpress gallery plugin, gallery, nextgen, nextgen gallery, photo gallery, image gallery, photography, slideshow, images, photo, photo album, watermark
 Requires at least: 4.0.0
-Stable tag: 3.1.17
+Stable tag: 3.2.0
 Tested up to: 5.1.1
 License: GPLv2
 
@@ -182,6 +182,18 @@ For more information, feel free to visit the official website for the NextGEN Ga
 
 
 == Changelog ==
+
+= V3.2.0 - 05.07.2019 =
+* NEW:     Branding update
+* NEW:     API methods for detecting NextGEN provided pages and custom post types
+* Fixed:   Missing menus after Reset
+* Fixed:   Ajax pagination with Simplelightbox
+* Fixed:   Datamapper query cache not purged after saving an entity
+* Fixed:   Gallery folder not created when using Manage Galleries -> New Gallery
+* Fixed:   Notifications not appearing on all Nextgen-provided pages
+* Fixed:   Gallery wizard conflicting with NextGEN Pro ecommerce wizard
+* Fixed:   Upgrade to pro button
+* Fixed:   NGG activation transient not given a time-to-live value
 
 = V3.1.17 - 04.02.2019 =
 * Fixed:   Preview images for display types giving get_static_abspath error

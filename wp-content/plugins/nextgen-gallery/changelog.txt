@@ -1,6 +1,18 @@
 NextGEN Gallery
 by Imagely
 
+= V3.2.0 - 05.07.2019 =
+* NEW:     Branding update
+* NEW:     API methods for detecting NextGEN provided pages and custom post types
+* Fixed:   Missing menus after Reset
+* Fixed:   Ajax pagination with Simplelightbox
+* Fixed:   Datamapper query cache not purged after saving an entity
+* Fixed:   Gallery folder not created when using Manage Galleries -> New Gallery
+* Fixed:   Notifications not appearing on all Nextgen-provided pages
+* Fixed:   Gallery wizard conflicting with NextGEN Pro ecommerce wizard
+* Fixed:   Upgrade to pro button
+* Fixed:   NGG activation transient not given a time-to-live value
+
 = V3.1.17 - 04.02.2019 =
 * Fixed:   Preview images for display types giving get_static_abspath error
 * Fixed:   Compatibility with the Imagely Lightroom plugin

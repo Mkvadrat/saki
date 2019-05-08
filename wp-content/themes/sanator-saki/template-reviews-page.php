@@ -123,6 +123,11 @@ get_header();
                             </div>
                         </div>
                     </div>
+                    
+                    <?php
+                        if ( function_exists('dynamic_sidebar') )
+                            dynamic_sidebar('sharing-page');
+                    ?>
                 </div>
             </div>
         </div>

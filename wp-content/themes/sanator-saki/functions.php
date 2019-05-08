@@ -214,7 +214,7 @@ function getRelatedMeta($post_id, $meta_key){
 // Добавляем свой класс для пунктов меню:
 class header_menu extends Walker_Nav_Menu {
 	// Добавляем классы к вложенным ul
-	function start_lvl( &$output, $depth ) {
+	function start_lvl( &$output, $depth = 0, $args = Array() ) {
 		// Глубина вложенных ul
 		$indent = ( $depth > 0  ? str_repeat( "\t", $depth ) : '' ); // code indent
 		$display_depth = ( $depth + 1); // because it counts the first submenu as 0
@@ -236,7 +236,7 @@ class header_menu extends Walker_Nav_Menu {
 	}
 
 	// Добавляем классы к вложенным li
-	function start_el( &$output, $item, $depth, $args ) {
+	function start_el( &$output, $item, $depth = 0, $args = array(), $id = 0 ) {
 		global $wpdb;
 		global $wp_query;
 		$indent = ( $depth > 0 ? str_repeat( "\t", $depth ) : '' ); // code indent

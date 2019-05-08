@@ -282,7 +282,7 @@ class A_Lightbox_Manager_Form extends Mixin
             $selected = 'fancybox';
         }
         // Render container tab
-        return $this->render_partial('photocrati-nextgen_other_options#lightbox_library_tab', array('lightbox_library_label' => __('What effect would you like to use?', 'nggallery'), 'libs' => C_Lightbox_Library_Manager::get_instance()->get_all(), 'selected' => $selected, 'sub_fields' => $sub_fields, 'lightbox_global' => $this->object->get_model()->thumbEffectContext), TRUE);
+        return $this->render_partial('photocrati-nextgen_other_options#lightbox_library_tab', array('lightbox_library_label' => __('What lightbox would you like to use?', 'nggallery'), 'libs' => C_Lightbox_Library_Manager::get_instance()->get_all(), 'selected' => $selected, 'sub_fields' => $sub_fields, 'lightbox_global' => $this->object->get_model()->thumbEffectContext), TRUE);
     }
     function save_action()
     {
@@ -427,17 +427,6 @@ class A_Reset_Form extends Mixin
         // removes all ngg_options entry in wp_options
         $settings->reset();
         $settings->destroy();
-        // clear NextGEN's capabilities from the roles system
-        $capabilities = array("NextGEN Gallery overview", "NextGEN Use TinyMCE", "NextGEN Upload images", "NextGEN Manage gallery", "NextGEN Manage others gallery", "NextGEN Manage tags", "NextGEN Edit album", "NextGEN Change style", "NextGEN Change options", "NextGEN Attach Interface");
-        $roles = array("subscriber", "contributor", "author", "editor", "administrator");
-        foreach ($roles as $role) {
-            $role = get_role($role);
-            foreach ($capabilities as $capability) {
-                if (!is_null($role)) {
-                    $role->remove_cap($capability);
-                }
-            }
-        }
         // Some installations of NextGen that upgraded from 1.9x to 2.0x have duplicates installed,
         // so for now (as of 2.0.21) we explicitly remove all display types and lightboxes from the
         // db as a way of fixing this.
@@ -445,8 +434,8 @@ class A_Reset_Form extends Mixin
         $wpdb->query($wpdb->prepare("DELETE FROM {$wpdb->posts} WHERE post_type = %s", 'lightbox_library'));
         // the installation will run on the next page load; so make our own request before reloading the browser
         wp_remote_get(admin_url('plugins.php'), array('timeout' => 180, 'blocking' => true, 'sslverify' => false));
-        header('Location: ' . get_admin_url());
-        throw new E_Clean_Exit();
+        wp_redirect(get_admin_url());
+        exit;
     }
 }
 /**
