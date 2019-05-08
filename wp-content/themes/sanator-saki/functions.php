@@ -206,6 +206,27 @@ function getRelatedMeta($post_id, $meta_key){
 	return $value;
 }
 
+function find_image($id){
+	global $wpdb;
+
+	if( is_numeric($id) ) {
+
+		if ( $image = wp_cache_get($id, 'ngg_image') )
+			return $image;
+
+		$result = $wpdb->get_row( $wpdb->prepare( "SELECT tt.*, t.* FROM $wpdb->nggallery AS t INNER JOIN $wpdb->nggpictures AS tt ON t.gid = tt.galleryid WHERE tt.pid = %d ", $id ) );
+	} else
+		$result = $wpdb->get_row( $wpdb->prepare( "SELECT tt.*, t.* FROM $wpdb->nggallery AS t INNER JOIN $wpdb->nggpictures AS tt ON t.gid = tt.galleryid WHERE tt.image_slug = %s ", $id ) );
+
+	// Build the object from the query result
+	if ($result) {
+		$image = new nggImage($result);
+		return $image;
+	}
+
+	return false;
+}
+
 /**********************************************************************************************************************************************************
 ***********************************************************************************************************************************************************
 ****************************************************************************МЕНЮ САЙТА*********************************************************************
