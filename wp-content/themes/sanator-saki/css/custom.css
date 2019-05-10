@@ -2704,6 +2704,11 @@ table td h3 {
     height: 308px;
 }
 
+.list-gallery-photos li:nth-child(9n-1), .list-gallery-photos li:nth-child(9n) {
+    width: 48.5%;
+    height: 308px;
+}
+
 .list-gallery-photos li a {
     display: -webkit-box;
     display: -webkit-flex;
@@ -2973,6 +2978,9 @@ table td h3 {
     color: #fff !important;
 }
 
+.fca_qc_your_answer_container {
+    display: none !important;
+}
 
 @media (max-width: 1200px) {
     #slider-overlay {
