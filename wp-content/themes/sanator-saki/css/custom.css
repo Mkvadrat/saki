@@ -2982,6 +2982,14 @@ table td h3 {
     display: none !important;
 }
 
+.booking-btn{
+    margin-bottom: 40px;
+}
+
+.page__404 h1{
+    text-align: center;
+    }
+
 @media (max-width: 1200px) {
     #slider-overlay {
         left: 0;
