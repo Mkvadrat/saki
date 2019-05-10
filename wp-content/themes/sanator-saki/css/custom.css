@@ -3389,3 +3389,7 @@ table td h3 {
         display: table-cell;
     }
 }
+
+.fca_qc_your_answer_container{
+    display: none !important;
+}

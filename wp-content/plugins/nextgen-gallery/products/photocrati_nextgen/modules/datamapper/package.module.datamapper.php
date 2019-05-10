@@ -1793,6 +1793,10 @@ class C_DataMapper_Model extends C_Component
             $this->_stdObject->__defaults_set = TRUE;
         }
     }
+    function jsonSerialize()
+    {
+        return $this->get_entity();
+    }
     function has_default_values()
     {
         return isset($this->_stdObject->__defaults_set) && $this->_stdObject->__defaults_set == TRUE;

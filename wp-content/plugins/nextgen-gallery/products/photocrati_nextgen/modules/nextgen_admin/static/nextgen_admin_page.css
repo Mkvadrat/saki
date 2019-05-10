@@ -163,6 +163,30 @@ table.nextgen_settings_position {
     float: left;
 }
 
+.about-wrap [class$="-col"] {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.about-wrap [class$="-col"] .col {
+    flex: 1;
+    align-self: flex-start;
+}
+
+.about-wrap [class$="-col"] .col+.col {
+    margin-left: 20px;
+}
+
+.about-wrap .two-col img {
+    margin-bottom: 1.5em;
+}
+
+.about-wrap .headline-feature {
+    max-width: none;
+    margin: 0 0 40px 0;
+}
+
 #ngg_page_content a {
     color: #9fbb1a;
 }
@@ -1046,6 +1070,11 @@ table.nextgen_settings_position {
 }
 
 @media (max-width: 782px) {
+    .about-wrap .three-col .col, .about-wrap .two-col .col {
+        min-width: 100%! important;
+        margin-left: 0;
+        margin-top: 1em;
+    }
     .ngg-post-type #ngg_page_content button.toggle-row {
         width: 40px !important;
         height: 40px !important;
