@@ -2973,6 +2973,9 @@ table td h3 {
     color: #fff !important;
 }
 
+.fca_qc_your_answer_container {
+    display: none !important;
+}
 
 @media (max-width: 1200px) {
     #slider-overlay {
