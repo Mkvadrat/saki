@@ -2704,6 +2704,11 @@ table td h3 {
     height: 308px;
 }
 
+.list-gallery-photos li:nth-child(9n-1), .list-gallery-photos li:nth-child(9n) {
+    width: 48.5%;
+    height: 308px;
+}
+
 .list-gallery-photos li a {
     display: -webkit-box;
     display: -webkit-flex;
