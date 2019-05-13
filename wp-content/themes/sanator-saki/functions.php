@@ -39,7 +39,6 @@ function mk_scripts(){
 	wp_register_style( 'custom', get_template_directory_uri() . '/css/custom.css'); 
 	wp_enqueue_style( 'custom' );
 	
-
 	if (!is_admin()) {
 		wp_enqueue_script( 'jquery-min', 'https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js', '', '', true );
 		wp_enqueue_script( 'bootstrap-min', get_template_directory_uri() . '/js/bootstrap.min.js', '', '', true );
@@ -403,7 +402,7 @@ function faq_register(){
 		'new_item' => __('Новая статья', 'codeless'),
 		'view_item' => __('Просмотр статей на сайте', 'codeless'),
 		'search_items' => __('Искать статью', 'codeless'),
-		'not_found' =>  __('Статья не найден.', 'codeless'),
+		'not_found' =>  __('Статья не найдена.', 'codeless'),
 		'not_found_in_trash' => __('В корзине нет статьи.', 'codeless'), 
 		'parent_item_colon' => ''
 	);
@@ -467,20 +466,18 @@ add_action('init', 'staff_register', 1);
 
 /* Staff Register */
 
-function staff_register() 
-{
-
+function staff_register(){
 	$labels = array(
-		'name' => _x('Team', 'post type general name', 'codeless'),
-		'singular_name' => _x('Staff Entry', 'post type singular name', 'codeless'),
-		'add_new' => _x('Add New', 'staff', 'codeless'),
-		'add_new_item' => __('Add New Staff Entry', 'codeless'),
-		'edit_item' => __('Edit Staff Entry', 'codeless'),
-		'new_item' => __('New Staff Entry', 'codeless'),
-		'view_item' => __('View Staff Entry', 'codeless'),
-		'search_items' => __('Search Staff Entries', 'codeless'),
-		'not_found' =>  __('No Staff Entries found', 'codeless'),
-		'not_found_in_trash' => __('No Staff Entries found in Trash', 'codeless'), 
+		'name' => _x('Наша комманда', 'post type general name', 'codeless'),
+		'singular_name' => _x('Статья', 'post type singular name', 'codeless'),
+		'add_new' => _x('Добавить статью', 'staff', 'codeless'),
+		'add_new_item' => __('Добавить новую статью', 'codeless'),
+		'edit_item' => __('Редактировать статью', 'codeless'),
+		'new_item' => __('Новая статья', 'codeless'),
+		'view_item' => __('Просмотр статей на сайте', 'codeless'),
+		'search_items' => __('Искать статью', 'codeless'),
+		'not_found' =>  __('Статья не найдена.', 'codeless'),
+		'not_found_in_trash' => __('В корзине нет статьи.', 'codeless'), 
 		'parent_item_colon' => ''
 	);
 	
@@ -498,30 +495,23 @@ function staff_register()
 		'supports' => array('title','thumbnail','editor')
 	);
 	
-	
-	
 	register_post_type( 'staff' , $args );
-	
 	
 	register_taxonomy("staff_entries", 
 		array("staff"), 
 		array(	"hierarchical" => true, 
-		"label" => "Staff Categories", 
-		"singular_label" => "Staff Categories", 
+		"label" => "Рубрики", 
+		"singular_label" => "Рубрика", 
 		"rewrite" => true,
 		"query_var" => true
 	));  
 }
-
 add_filter("manage_edit-staff_columns", "prod_edit_staff_columns");
 add_action("manage_posts_custom_column",  "prod_custom_staff_columns");
 
-
-function prod_edit_staff_columns($columns)
-{
+function prod_edit_staff_columns($columns){
 	$newcolumns = array(
 		"cb" => "<input type=\"checkbox\" />",
-		
 		"title" => "Title",
 		"staff_entries" => "Categories"
 	);
@@ -531,18 +521,12 @@ function prod_edit_staff_columns($columns)
 	return $columns;
 }
 
-function prod_custom_staff_columns($column)
-{
+function prod_custom_staff_columns($column){
 	global $post;
-	switch ($column)
-	{
-		
-	
+	switch ($column){
 		case "description":
-		
 		break;
 		case "price":
-		
 		break;
 		case "staff_entries":
 		echo get_the_term_list($post->ID, 'staff_entries', '', ', ','');
@@ -550,7 +534,6 @@ function prod_custom_staff_columns($column)
 	}
 }
 ///////////
-
 
 /**********************************************************************************************************************************************************
 ***********************************************************************************************************************************************************
@@ -949,4 +932,3 @@ function true_add_ajax_comment(){
 }
 add_action('wp_ajax_ajaxcomments', 'true_add_ajax_comment'); // wp_ajax_{значение параметра action}
 add_action('wp_ajax_nopriv_ajaxcomments', 'true_add_ajax_comment'); // wp_ajax_nopriv_{значение параметра action}
-
