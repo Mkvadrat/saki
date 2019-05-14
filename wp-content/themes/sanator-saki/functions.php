@@ -205,6 +205,15 @@ function getRelatedMeta($post_id, $meta_key){
 	return $value;
 }
 
+//Вывод id категории
+function getCurrentCatID(){
+	global $wp_query;
+	if(is_category()){
+		$cat_ID = get_query_var('cat');
+	}
+	return $cat_ID;
+}
+
 /**********************************************************************************************************************************************************
 ***********************************************************************************************************************************************************
 ****************************************************************************МЕНЮ САЙТА*********************************************************************
@@ -461,79 +470,75 @@ function prod_custom_faq_columns($column){
 }
 add_action("manage_posts_custom_column",  "prod_custom_faq_columns");
 
-///////////
-add_action('init', 'staff_register', 1);
-
-/* Staff Register */
-
-function staff_register(){
+/**********************************************************************************************************************************************************
+***********************************************************************************************************************************************************
+****************************************************************************КОММАНДА****************************************************************************
+***********************************************************************************************************************************************************
+***********************************************************************************************************************************************************/
+//Вывод в админке раздела
+function register_post_type_staff() {
 	$labels = array(
-		'name' => _x('Наш персонал', 'post type general name', 'codeless'),
-		'singular_name' => _x('Статья', 'post type singular name', 'codeless'),
-		'add_new' => _x('Добавить статью', 'staff', 'codeless'),
-		'add_new_item' => __('Добавить новую статью', 'codeless'),
-		'edit_item' => __('Редактировать статью', 'codeless'),
-		'new_item' => __('Новая статья', 'codeless'),
-		'view_item' => __('Просмотр статей на сайте', 'codeless'),
-		'search_items' => __('Искать статью', 'codeless'),
-		'not_found' =>  __('Статья не найдена.', 'codeless'),
-		'not_found_in_trash' => __('В корзине нет статьи.', 'codeless'), 
-		'parent_item_colon' => ''
-	);
-	
-	$slugRule = "staff_trusted";
-	
-	$args = array(
-		'labels' => $labels,
-		'public' => true,
-		'show_ui' => true,
-		'capability_type' => 'post',
-		'hierarchical' => false,
-		'rewrite' => array('slug'=>$slugRule,'with_front'=>true),
-		'query_var' => true,
-		'show_in_nav_menus'=> false,
-		'supports' => array('title','thumbnail','editor')
-	);
-	
-	register_post_type( 'staff' , $args );
-	
-	register_taxonomy("staff_entries", 
-		array("staff"), 
-		array(	"hierarchical" => true, 
-		"label" => "Рубрики", 
-		"singular_label" => "Рубрика", 
-		"rewrite" => true,
-		"query_var" => true
-	));  
+	 'name' => 'Наш персонал',
+	 'singular_name' => 'Наш персонал',
+	 'add_new' => 'Добавить статью',
+	 'add_new_item' => 'Добавить новую статью',
+	 'edit_item' => 'Редактировать статью',
+	 'new_item' => 'Новая статья',
+	 'all_items' => 'Все статьи',
+	 'view_item' => 'Просмотр блога на сайте',
+	 'search_items' => 'Искать статью',
+	 'not_found' => 'Статья не найдена.',
+	 'not_found_in_trash' => 'В корзине нет статей.',
+	 'menu_name' => 'Наш персонал'
+	 );
+	 $args = array(
+		 'labels' => $labels,
+		 'public' => true,
+		 'exclude_from_search' => false,
+		 'show_ui' => true,
+		 'has_archive' => false,
+		 'menu_icon' => 'dashicons-welcome-write-blog', // иконка в меню
+		 'menu_position' => 20,
+		 'supports' =>  array('title','editor', 'thumbnail'),
+	 );
+ 	register_post_type('staff', $args);
 }
-add_filter("manage_edit-staff_columns", "prod_edit_staff_columns");
-add_action("manage_posts_custom_column",  "prod_custom_staff_columns");
+add_action( 'init', 'register_post_type_staff' );
 
-function prod_edit_staff_columns($columns){
-	$newcolumns = array(
-		"cb" => "<input type=\"checkbox\" />",
-		"title" => "Title",
-		"staff_entries" => "Categories"
-	);
-	
-	$columns= array_merge($newcolumns, $columns);
-	
-	return $columns;
-}
+function true_post_type_staff( $staff ) {
+	global $post, $post_ID;
 
-function prod_custom_staff_columns($column){
-	global $post;
-	switch ($column){
-		case "description":
-		break;
-		case "price":
-		break;
-		case "staff_entries":
-		echo get_the_term_list($post->ID, 'staff_entries', '', ', ','');
-		break;
-	}
+	$staff['staff'] = array(
+			0 => '',
+			1 => sprintf( 'Статьи обновлены. <a href="%s">Просмотр</a>', esc_url( get_permalink($post_ID) ) ),
+			2 => 'Статья обновлёна.',
+			3 => 'Статья удалёна.',
+			4 => 'Статья обновлена.',
+			5 => isset($_GET['revision']) ? sprintf( 'Статья восстановлена из редакции: %s', wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
+			6 => sprintf( 'Статья опубликована на сайте. <a href="%s">Просмотр</a>', esc_url( get_permalink($post_ID) ) ),
+			7 => 'Статья сохранена.',
+			8 => sprintf( 'Отправлена на проверку. <a target="_blank" href="%s">Просмотр</a>', esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ) ),
+			9 => sprintf( 'Запланирована на публикацию: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Просмотр</a>', date_i18n( __( 'M j, Y @ G:i' ), strtotime( $post->post_date ) ), esc_url( get_permalink($post_ID) ) ),
+			10 => sprintf( 'Черновик обновлён. <a target="_blank" href="%s">Просмотр</a>', esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ) ),
+	);
+	return $staff;
 }
-///////////
+add_filter( 'post_updated_messages', 'true_post_type_staff' );
+
+//Категории для пользовательских записей
+function create_taxonomies_staff()
+{
+    // Cats Categories
+    register_taxonomy('staff_entries',array('staff'),array(
+        'hierarchical' => false,
+        'label' => 'Рубрики',
+        'singular_name' => 'Рубрика',
+        'show_ui' => true,
+        'query_var' => true,
+        'rewrite' => array('slug' => 'staff_entries' ),
+    ));
+}
+add_action( 'init', 'create_taxonomies_staff', 0 );
 
 /**********************************************************************************************************************************************************
 ***********************************************************************************************************************************************************
@@ -847,7 +852,7 @@ add_filter('request', 'parse_request_url_staff', 1, 1 );
 ***********************************************************************************************************************************************************/
 //Удаление sluga из url таксономии 
 function remove_slug_from_post( $post_link, $post, $leavename ) {
-	if ( 'rooms' != $post->post_type && 'staff_trusted' != $post->post_type /*&& 'workshop' != $post->post_type*/ || 'publish' != $post->post_status ) {
+	if ( 'rooms' != $post->post_type && 'staff' != $post->post_type /*&& 'workshop' != $post->post_type*/ || 'publish' != $post->post_status ) {
 		return $post_link;
 	}
 		$post_link = str_replace( '/' . $post->post_type . '/', '/', $post_link );

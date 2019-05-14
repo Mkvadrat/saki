@@ -112,13 +112,14 @@ Version: 1.0
         <?php echo getMeta('map_header_main_page'); ?>
     </div>
     <?php } ?>
-    
+
     <div id="callback" class="hentry">
-        <div id="nf-form-1-cont" class="nf-form-cont">
-            <div class="nf-form-wrap ninja-forms-form-wrap">
-                Попап форма
-            </div>
-        </div>
+        <?php
+            $forms_a = getMeta('callback_footer_main_page');
+            if($forms_a){
+                echo do_shortcode('[contact-form-7 id=" ' . $forms_a . ' "]'); 
+            }
+        ?>
     </div>
 </div>
 

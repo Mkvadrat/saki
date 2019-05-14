@@ -97,7 +97,13 @@ $(document).ready(function () {
     $(".maps-sanatorium").fancybox({
         touch: false
     });
-
+    
+    $("a.gallery").fancybox();
+    
+    $(".fancybox-inline").fancybox({
+        touch: false
+    });
+    
     //Отзывы
     $('#commentform *[name="confirm"]').on('change', function () {
         if ($(this).is(':checked')) {
