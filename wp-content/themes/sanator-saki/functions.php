@@ -468,7 +468,7 @@ add_action('init', 'staff_register', 1);
 
 function staff_register(){
 	$labels = array(
-		'name' => _x('Наша комманда', 'post type general name', 'codeless'),
+		'name' => _x('Наш персонал', 'post type general name', 'codeless'),
 		'singular_name' => _x('Статья', 'post type singular name', 'codeless'),
 		'add_new' => _x('Добавить статью', 'staff', 'codeless'),
 		'add_new_item' => __('Добавить новую статью', 'codeless'),
@@ -775,6 +775,71 @@ function parse_request_url_rooms( $query ){
 }
 add_filter('request', 'parse_request_url_rooms', 1, 1 );
 
+//Удаление staff_entries из url таксономии
+function true_remove_slug_from_staff( $url, $term, $taxonomy ){
+
+	$taxonomia_name = 'staff_entries';
+	$taxonomia_slug = 'staff_entries';
+
+	if ( strpos($url, $taxonomia_slug) === FALSE || $taxonomy != $taxonomia_name ) return $url;
+
+	$url = str_replace('/' . $taxonomia_slug, '', $url);
+
+	return $url;
+}
+add_filter( 'term_link', 'true_remove_slug_from_staff', 10, 3 );
+
+//Перенаправление staff_entries в случае удаления category
+function parse_request_url_staff( $query ){
+
+	$taxonomia_name = 'staff_entries';
+
+	if( $query['attachment'] ) :
+		$condition = true;
+		$main_url = $query['attachment'];
+	else:
+		$condition = false;
+		$main_url = $query['name'];
+	endif;
+
+	$termin = get_term_by('slug', $main_url, $taxonomia_name);
+
+	if ( isset( $main_url ) && $termin && !is_wp_error( $termin )):
+
+		if( $condition ) {
+			unset( $query['attachment'] );
+			$parent = $termin->parent;
+			while( $parent ) {
+				$parent_term = get_term( $parent, $taxonomia_name);
+				$main_url = $parent_term->slug . '/' . $main_url;
+				$parent = $parent_term->parent;
+			}
+		} else {
+			unset($query['name']);
+		}
+
+		switch( $taxonomia_name ):
+			case 'category':{
+				$query['category_name'] = $main_url;
+				break;
+			}
+			case 'post_tag':{
+				$query['tag'] = $main_url;
+				break;
+			}
+			default:{
+				$query[$taxonomia_name] = $main_url;
+				break;
+			}
+		endswitch;
+
+	endif;
+
+	return $query;
+
+}
+add_filter('request', 'parse_request_url_staff', 1, 1 );
+
 /**********************************************************************************************************************************************************
 ***********************************************************************************************************************************************************
 *****************************************************************REMOVE POST_TYPE SLUG*********************************************************************
@@ -782,7 +847,7 @@ add_filter('request', 'parse_request_url_rooms', 1, 1 );
 ***********************************************************************************************************************************************************/
 //Удаление sluga из url таксономии 
 function remove_slug_from_post( $post_link, $post, $leavename ) {
-	if ( 'rooms' != $post->post_type /*&& 'shops' != $post->post_type && 'workshop' != $post->post_type*/ || 'publish' != $post->post_status ) {
+	if ( 'rooms' != $post->post_type && 'staff_trusted' != $post->post_type /*&& 'workshop' != $post->post_type*/ || 'publish' != $post->post_status ) {
 		return $post_link;
 	}
 		$post_link = str_replace( '/' . $post->post_type . '/', '/', $post_link );
@@ -799,7 +864,7 @@ function parse_request_url_post( $query ) {
 	}
 
 	if ( ! empty( $query->query['name'] ) ) {
-		$query->set( 'post_type', array( 'post', 'rooms', 'page' ) );
+		$query->set( 'post_type', array( 'post', 'rooms', 'staff', 'page' ) );
 	}
 }
 add_action( 'pre_get_posts', 'parse_request_url_post' );
